@@ -15,6 +15,7 @@ fn main(){
     //calculate StrengthA, StrengthB
     //loop
     //pullforce function call
+    //this is changed
     let mut returnvalue=pullforce(&sample_array);
     println!("returned {}",returnvalue);
     //calculation pull force on the fly to save itereation
