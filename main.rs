@@ -16,6 +16,7 @@ fn main(){
     //loop
     //pullforce function call
     //this is changed
+    //also this
     let mut returnvalue=pullforce(&sample_array);
     println!("returned {}",returnvalue);
     //calculation pull force on the fly to save itereation
