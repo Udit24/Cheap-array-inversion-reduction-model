@@ -2,9 +2,9 @@ use std::io;
 use rand::Rng;
 const SIZE: usize=30;
 
-fn find_median(sample_array: &[i32])->(i32){
-    let boundary: f32=(largest+smallest) as f32/2.0;
-    sample_array[]
+fn find_median(sample_array: &[i32], mut i:usize,mut j:usize)->(i32){
+    let boundary: usize=(i+j)/2 as usize;
+    sample_array[boundary]
 }
 fn pullforce(sample_array: &[i32]){
     //max min
@@ -19,7 +19,7 @@ fn pullforce(sample_array: &[i32]){
     //I want to use quick sorts median of three rule to find a pivot
     //I want to use the pivot to create small and less camp
     // since the push and pull needs to happen in at most longn (targetting loglogn) time, I split the data at median and subsequent medians into logn parts
-    let median: i32=find_median(&sample_array);
+    let median: i32=find_median(&sample_array,0,sample_array.len()-1);
 }
 fn main(){
     //init a demo array to be changed later
