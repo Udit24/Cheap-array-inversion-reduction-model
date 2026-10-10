@@ -1,38 +1,33 @@
 use std::io;
 use rand::Rng;
-const SIZE: usize=30;
+const SIZE: usize=10000;
+const HSIZE: usize=163;
 
-fn find_median(sample_array: &[i32], mut i:usize,mut j:usize)->(i32){
-    let boundary: usize=(i+j)/2 as usize;
-    sample_array[boundary]
-}
-fn pullforce(sample_array: &[i32]){
-    //max min
-    let mut largest:i32=sample_array.iter().max().copied().unwrap();
-    let mut smallest:i32=sample_array.iter().min().copied().unwrap();
-    let boundary: f32=(largest+smallest) as f32/2.0;
-    let mut temp_array=[sample_array.len()];
-    //calculating mean
-    let sum: i32  = sample_array.iter().sum();
-    let mean: i32 = sum / <usize as TryInto<i32>>::try_into(sample_array.len()).expect("Index out of bounds");
-    //The above methods do their jobs in logn time and I wish to change them in future
-    //I want to use quick sorts median of three rule to find a pivot
-    //I want to use the pivot to create small and less camp
-    // since the push and pull needs to happen in at most longn (targetting loglogn) time, I split the data at median and subsequent medians into logn parts
-    let median: i32=find_median(&sample_array,0,sample_array.len()-1);
-}
 fn main(){
     //init a demo array to be changed later
-    let mut sample_array: [i32; SIZE] = rand::random();
-    println!("Array initialised as: {:?}", sample_array);
-    //calculate StrengthA, StrengthB
-    //loop
-    //pullforce function call
-    //this is changed
-    //also this
-    let mut returnvalue=pullforce(&sample_array);
-    println!("returned {:?}",returnvalue);
-    //calculation pull force on the fly to save itereation
-    //
+    let mut rng = rand::thread_rng();
+    let vec: Vec<i32> = (0..SIZE).map(|_| rng.random()).collect();
+    /*Having problems using a normal array in fear of running out of memory space
+    a heap is much safer to prevent running out of memory than a stack*/
+    /*Looping to choose exactly 163 random elements from the vector to use as
+    pivots. Storing their indexes in an ind array[163], and the elements in ele array[163]*/
+    let mut ind:[u32;HSIZE]=[0 as u32;HSIZE];let mut ele:[i32;HSIZE]=[0 as i32;HSIZE];
+    for i in 0..163{
+        ind[i] = rand::random_range(0..SIZE) as u32;
+        ele[i]=vec[ind[i] as usize] as i32;  
+        //println!("At index {:?}, the value {:?}",ind[i],ele[i]);
+    }
+    let mut temp_vec: Vec<i32> = Vec::with_capacity(SIZE);
+    for item in &vec{
+        let mut count:usize=0;
+        for i in 0..163usize{
+            if(*item<vec[i]){
+                count+=1;
+            }
+        }
+        let rank_estimate:usize=(1+((vec.len()-1)/163)*count) as usize;
+        temp_vec.insert(rank_estimate,*item);
+    }
+    //println!("ARRAY:{:?}",vec);
 }
 
